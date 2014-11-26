@@ -3,7 +3,7 @@
 
 from scrapy.spider import Spider
 from scrapy.selector import Selector
-from tutorial.items import WooYunItem
+from tutorial.items import WooyunItem
 
 from BeautifulSoup import BeautifulSoup
 
@@ -24,8 +24,8 @@ class DmozSpider(Spider):
                     print stat.text + "=",
                 print
             if doc.tbody:
-                tmpDict = {}
                 for tr in doc.findAll("tr"):
+                    item = DmozItem()
                     if len(tr.findAll()) == 7:
                         l = [a.text for a in tr.findAll()]
                         # print "+++".join(l)
