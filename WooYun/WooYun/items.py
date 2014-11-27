@@ -15,3 +15,4 @@ class WooyunItem(scrapy.Item):
     pb_url = scrapy.Field()
     pb_name = scrapy.Field()
     pb_auth = scrapy.Field()
+    mes_type = scrapy.Field()

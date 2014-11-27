@@ -3,10 +3,11 @@
 
 from scrapy.spider import Spider
 from scrapy.selector import Selector
-from tutorial.items import WooyunItem
+from WooYun.items import WooyunItem
 
 from BeautifulSoup import BeautifulSoup
 
+type_list = ["a", "b", "c", "d", "e"]
 
 class DmozSpider(Spider):
     name = "wooyun"
@@ -16,36 +17,20 @@ class DmozSpider(Spider):
     def parse(self, response):
         items = []
         sel = Selector(response)
-        for table in sel.xpath("//table[@class='listTable']").extract():
+        root_path = sel.xpath("//table[@class='listTable']").extract()
+        for table, index_msg in zip(root_path, type_list):
             doc = BeautifulSoup(table)
             if doc.thead:
-                print "++++++++++++++++++++"
-                for stat in doc.thead.findAll():
-                    print stat.text + "=",
-                print
+                pass
             if doc.tbody:
                 for tr in doc.findAll("tr"):
-                    item = DmozItem()
+                    item = WooyunItem()
                     if len(tr.findAll()) == 7:
                         l = [a.text for a in tr.findAll()]
-                        # print "+++".join(l)
-                        tmpDict["time"] = l[0]
-                        tmpDict["url"] = tr.a.get("href")
-                        tmpDict["name"] = l[1]
-                        tmpDict["auth"] = l[-1]
-                    print tmpDict
-                    # a, b, c, d = tr.findAll()[:]
-                    # print a, b, c, d
-                        
-                    # print
-
-            # print table
-            # for url in table.xpath('a/text()').extract():
-            #     print url
-        #     item = DmozItem()
-        #     item['title'] = site.xpath('a/text()').extract()
-        #     item['link'] = site.xpath('a/@href').extract()
-        #     item['desc'] = site.xpath('text()').extract()
-        #     items.append(item)
-        # return items 
-            
+                        item["pb_time"] = l[0]
+                        item["pb_url"] = tr.a.get("href")
+                        item["pb_name"] = l[1]
+                        item["pb_auth"] = l[-1]
+                        item["mes_type"] = index_msg
+                        items.append(item)
+        return items

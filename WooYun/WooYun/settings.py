@@ -15,3 +15,9 @@ NEWSPIDER_MODULE = 'WooYun.spiders'
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'WooYun (+http://www.yourdomain.com)'
+
+ITEM_PIPELINES = {
+    'WooYun.pipelines.JsonWriterPipeline': 300,
+    'WooYun.pipelines.MongoDBPipeline':800,
+    # 'myproject.pipelines.JsonWriterPipeline': 800,
+}
