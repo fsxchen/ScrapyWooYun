@@ -18,6 +18,6 @@ NEWSPIDER_MODULE = 'WooYun.spiders'
 
 ITEM_PIPELINES = {
     'WooYun.pipelines.JsonWriterPipeline': 300,
-    'WooYun.pipelines.MongoDBPipeline':800,
+    # 'WooYun.pipelines.MongoDBPipeline':800,
     # 'myproject.pipelines.JsonWriterPipeline': 800,
 }
